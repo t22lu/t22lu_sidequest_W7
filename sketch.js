@@ -102,6 +102,13 @@ let maxHealth = 3;
 let health = maxHealth;
 
 let dead = false;
+// --- DEBUG SYSTEM ---
+const DEBUG = {
+  visible: false,
+  showProbes: false,
+  godMode: false,
+  moonGravity: false,
+};
 let pendingDeath = false;
 let deathStarted = false;
 let deathFrameTimer = 0;
@@ -301,6 +308,9 @@ function draw() {
   updateBoars();
 
   // 2) then let physics apply vel.x / gravity
+  // apply debug gravity
+  world.gravity.y = DEBUG.moonGravity ? GRAVITY * 0.3 : GRAVITY;
+
   world.step();
 
   // --- CAMERA ---
@@ -319,6 +329,23 @@ function draw() {
 
   // --- PLAYER GROUNDED CHECK ---
   const grounded = isPlayerGrounded();
+
+  // --- DEBUG TOGGLE ---
+  if (kb.presses("b")) {
+    DEBUG.visible = !DEBUG.visible;
+  }
+
+  if (DEBUG.visible && kb.presses("1")) {
+    DEBUG.showProbes = !DEBUG.showProbes;
+  }
+
+  if (DEBUG.visible && kb.presses("2")) {
+    DEBUG.godMode = !DEBUG.godMode;
+  }
+
+  if (DEBUG.visible && kb.presses("3")) {
+    DEBUG.moonGravity = !DEBUG.moonGravity;
+  }
 
   // --- PLAYER INPUT (disabled during knockback / death) ---
   // ATTACK
@@ -517,6 +544,7 @@ function draw() {
 
   // accept R to restart the game if player wins or dies
   if ((dead || won) && kb.presses("r")) restartGame();
+  drawDebugMenu();
 }
 
 function applyIntegerScale() {
@@ -623,7 +651,7 @@ function rescueLeaf(player, leaf) {
 
 // --- DAMAGE FROM FIRE ---
 function takeDamageFromFire(player, fire) {
-  if (invulnTimer > 0 || dead) return;
+  if (DEBUG.godMode || invulnTimer > 0 || dead) return;
   receiveDamage.play();
 
   health = max(0, health - 1);
@@ -643,7 +671,7 @@ function takeDamageFromFire(player, fire) {
 // --- BOAR: HIT PLAYER ---
 function playerHitByBoar(player, e) {
   if (e.dying || e.dead) return;
-  if (invulnTimer > 0 || dead) return;
+  if (DEBUG.godMode || invulnTimer > 0 || dead) return;
   receiveDamage.play();
 
   health = max(0, health - 1);
@@ -824,6 +852,55 @@ function drawDeathOverlay() {
   camera.on();
 }
 
+function drawDebugMenu() {
+  if (!DEBUG.visible) return;
+
+  camera.off();
+
+  push();
+  noStroke();
+  fill(0, 180);
+  rect(20, 20, 260, 140, 8);
+  pop();
+
+  const x = 30;
+  let y = 40;
+
+  drawOutlinedTextToGfx(window, "DEBUG MENU", x, y, "#ffffff");
+  y += 25;
+
+  drawOutlinedTextToGfx(
+    window,
+    `1. Probes: ${DEBUG.showProbes ? "ON" : "OFF"}`,
+    x,
+    y,
+    "#00ffcc",
+  );
+  y += 20;
+
+  drawOutlinedTextToGfx(
+    window,
+    `2. Infinite HP: ${DEBUG.godMode ? "ON" : "OFF"}`,
+    x,
+    y,
+    "#00ffcc",
+  );
+  y += 20;
+
+  drawOutlinedTextToGfx(
+    window,
+    `3. Moon Gravity: ${DEBUG.moonGravity ? "ON" : "OFF"}`,
+    x,
+    y,
+    "#00ffcc",
+  );
+  y += 25;
+
+  drawOutlinedTextToGfx(window, "Press B to close", x, y, "#aaaaaa");
+
+  camera.on();
+}
+
 function placeProbe(probe, x, y) {
   probe.x = x;
   probe.y = y;
@@ -919,6 +996,10 @@ function updateBoars() {
   }
 
   for (const e of boar) {
+    // debug: toggle probe visibility
+    e.frontProbe.visible = DEBUG.showProbes;
+    e.footProbe.visible = DEBUG.showProbes;
+    e.groundProbe.visible = DEBUG.showProbes;
     updateBoarProbes(e);
     updateGroundProbe(e);
 

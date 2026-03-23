@@ -1,2 +1,43 @@
-# t22lu_sidequest_W7
+## Authors
 
+Tiffany Lu, 21078479, t22lu
+
+---
+
+## Description
+
+Moving as a wolf through a forest, hunt as many rabbits as you can and avoid the bears and fire!!
+
+New Addtion!: Debug menu
+Press b to show debug menu
+
+- Press 1 to switch on probes of the bears
+- Press 2 to switch on infinite health
+- Press 3 to switch on moon gravity
+
+Press WD to move
+Press A to jump
+Press R to return at starting position and restart the game
+Press Space to attack
+
+---
+
+## Assets
+
+[1]Edermunizz.2017.Free Pixel Art Forest.https://edermunizz.itch.io/free-pixel-art-forest
+[2]cfork and qubodup. 2012.Cute Cartoon Jump Sound Effect. https://opengameart.org/content/cute-cartoon-jump-sound-effect
+[3]Crafton Gaming. 2026.Minecraft.https://www.dafont.com/craftron-gaming.d6128
+[4]DRAGON-STUDIO.2026.https://pixabay.com/sound-effects/wolf-howl-474056/
+[5]Ludicarts. 2026. Free Platform - Game Tileset. https://ludicarts.itch.io/free-platform-game-tileset
+[6]Lyaseek.2023.MiniFolks Forest Animals.https://lyaseek.itch.io/miniffanimals
+[7]NastelBom.2026.https://pixabay.com/music/upbeat-jungle-forest-wildlife-487003/
+[8]Prmodrai.2025.Damage blowhole.https://pixabay.com/sound-effects/film-special-effects-damage-blowhole-402072/
+[9]Rudmer_Rotteveel(Freesound).2022.https://pixabay.com/sound-effects/film-special-effects-eating-a-cracker-mouth-closed-102488/
+
+---
+
+## GenAI
+
+The code was primarly written GenAI with human input from Tiffany Lu.
+
+---

@@ -860,7 +860,7 @@ function drawDebugMenu() {
   push();
   noStroke();
   fill(0, 180);
-  rect(20, 20, 260, 140, 8);
+  rect(10, 10, 225, 140, 8);
   pop();
 
   const x = 30;
@@ -871,7 +871,7 @@ function drawDebugMenu() {
 
   drawOutlinedTextToGfx(
     window,
-    `1. Probes: ${DEBUG.showProbes ? "ON" : "OFF"}`,
+    `1. Show Probes: ${DEBUG.showProbes ? "ON" : "OFF"}`,
     x,
     y,
     "#00ffcc",
